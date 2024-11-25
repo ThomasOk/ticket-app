@@ -56,6 +56,15 @@ export default {
 					5: "hsl(var(--chart-5))",
 				},
 			},
+			keyframes: {
+				"fade-in-from-top": {
+					from: { opacity: "0", transform: "translateY(-16px)" },
+					to: { opacity: "1", transform: "translateY(0)" },
+				},
+			},
+			animation: {
+				"fade-in-from-top": "fade-in-from-top 0.5s ease-out",
+			},
 		},
 	},
 	plugins: [require("tailwindcss-animate")],

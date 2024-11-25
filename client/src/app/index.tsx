@@ -8,14 +8,14 @@ export const App = () => {
 	return (
 		<AppProvider>
 			<AppRouter />
-			<Input />
-			<Button variant="primary" size="lg">
+			{/* <Input /> */}
+			{/* <Button variant="primary" size="lg">
 				Click zebizzz
 			</Button>
 			<Button variant="destructive" size="lg">
 				Click zebi
 			</Button>
-			<p className="text-red-500 font-semibold">Thomas</p>
+			<p className="text-red-500 font-semibold">Thomas</p> */}
 		</AppProvider>
 	);
 };
