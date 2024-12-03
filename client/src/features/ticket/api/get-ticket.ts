@@ -1,12 +1,14 @@
-import { initialTickets } from "@/data";
+import { useQuery } from "@tanstack/react-query";
+import { api } from "@/lib/api-client";
 import { Ticket } from "../types";
 
-export const getTicket = async (ticketId: string): Promise<Ticket | null> => {
-	await new Promise((resolve) => setTimeout(resolve, 2000));
+export const getTicket = (ticketId: string) => {
+	return api.get<Ticket>(`/tickets/${ticketId}`);
+};
 
-	const maybeTicket = initialTickets.find((ticket) => ticket.id === ticketId);
-
-	return new Promise((resolve) => {
-		resolve(maybeTicket || null);
+export const useTicket = (ticketId: string) => {
+	return useQuery({
+		queryKey: ["tickets", ticketId],
+		queryFn: () => getTicket(ticketId),
 	});
 };

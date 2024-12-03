@@ -40,6 +40,15 @@ const router = createBrowserRouter([
 			return { Component: TicketRoute };
 		},
 	},
+	{
+		path: paths.app.ticketEdit.path,
+		lazy: async () => {
+			const { TicketEditRoute } = await import(
+				"./routes/app/tickets/ticket-edit"
+			);
+			return { Component: TicketEditRoute };
+		},
+	},
 ]);
 
 export const AppRouter = () => {

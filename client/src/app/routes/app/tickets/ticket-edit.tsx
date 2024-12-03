@@ -1,29 +1,16 @@
+import { CardCompact } from "@/components/card-compact";
 import { ContentLayout } from "@/components/layouts/content-layout";
 import { Placeholder } from "@/components/placeholder";
-import { Button } from "@/components/ui/button";
-import { Link, useParams } from "react-router-dom";
-import { paths } from "@/config/paths";
-import { TicketItem } from "@/features/ticket/components/ticket-item";
-import { useEffect, useState } from "react";
-import { Ticket } from "@/features/ticket/types";
-import { getTicket, useTicket } from "@/features/ticket/api/get-ticket";
 import { Spinner } from "@/components/spinner";
+import { Button } from "@/components/ui/button";
+import { paths } from "@/config/paths";
+import { useTicket } from "@/features/ticket/api/get-ticket";
+import { TicketUpdateForm } from "@/features/ticket/components/ticket-update-form";
+import { Link, useParams } from "react-router-dom";
 
-// type TicketRouteProps = {
-// 	params: {
-// 		ticketId: string;
-// 	};
-// };
-
-export const TicketRoute = () => {
+export const TicketEditRoute = () => {
 	const { ticketId } = useParams();
 	const { isLoading, error, data: ticket } = useTicket(ticketId!);
-
-	//const ticket = tickets.find((ticket) => ticket.id === ticketId);
-
-	// if (!ticket) {
-	// 	return <div>Ticket not found</div>;
-	// }
 
 	return (
 		<ContentLayout>
@@ -43,8 +30,13 @@ export const TicketRoute = () => {
 					/>
 				</div>
 			) : (
-				<div className="flex justify-center animate-fade-in-from-top">
-					<TicketItem ticket={ticket} isDetail={true} />
+				<div className="flex-1 flex flex-col justify-center items-center">
+					<CardCompact
+						title="Edit Ticket"
+						description="Edit an existing ticket"
+						className="w-full max-x-[420px] animate-fade-in-from-top"
+						content={<TicketUpdateForm ticket={ticket} />}
+					/>
 				</div>
 			)}
 		</ContentLayout>

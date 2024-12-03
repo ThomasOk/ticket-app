@@ -5,4 +5,8 @@ export type Ticket = {
 	title: string;
 	content: string;
 	status: TicketStatus;
+	createdAt: Date;
+	updatedAt: Date;
+	deadline: string;
+	bounty: number;
 };

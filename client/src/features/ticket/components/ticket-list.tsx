@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Ticket } from "../types";
-import { getTickets } from "../api/get-tickets";
+import { getTickets, useTickets } from "../api/get-tickets";
 import { TicketItem } from "./ticket-item";
 import { Spinner } from "@/components/spinner";
 import { Placeholder } from "@/components/placeholder";
@@ -8,28 +8,30 @@ import { LucideAlertCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 export const TicketList = () => {
-	const [isLoading, setIsLoading] = useState(true);
-	const [error, setError] = useState<Error | null>(null);
-	const [tickets, setTickets] = useState<Ticket[]>([]);
+	// const [isLoading, setIsLoading] = useState(true);
+	// const [error, setError] = useState<Error | null>(null);
+	// const [tickets, setTickets] = useState<Ticket[]>([]);
 
-	const fetchTickets = async () => {
-		try {
-			setIsLoading(true);
-			setError(null);
-			const result = await getTickets();
-			setTickets(result);
-		} catch (e) {
-			setError(
-				e instanceof Error ? e : new Error("An unexpected error occurred")
-			);
-		} finally {
-			setIsLoading(false);
-		}
-	};
+	// const fetchTickets = async () => {
+	// 	try {
+	// 		setIsLoading(true);
+	// 		setError(null);
+	// 		const result = await getTickets();
+	// 		setTickets(result);
+	// 	} catch (e) {
+	// 		setError(
+	// 			e instanceof Error ? e : new Error("An unexpected error occurred")
+	// 		);
+	// 	} finally {
+	// 		setIsLoading(false);
+	// 	}
+	// };
 
-	useEffect(() => {
-		fetchTickets();
-	}, []);
+	// useEffect(() => {
+	// 	fetchTickets();
+	// }, []);
+
+	const { isLoading, error, data: tickets, refetch } = useTickets();
 
 	if (isLoading) return <Spinner />;
 
@@ -39,7 +41,7 @@ export const TicketList = () => {
 				icon={<LucideAlertCircle />}
 				label={error.message}
 				button={
-					<Button variant="outline" onClick={() => fetchTickets()}>
+					<Button variant="outline" onClick={() => refetch()}>
 						Try Again
 					</Button>
 				}
@@ -49,7 +51,7 @@ export const TicketList = () => {
 
 	return (
 		<div className="flex-1 flex flex-col items-center gap-y-4 animate-fade-in-from-top">
-			{tickets.map((ticket) => (
+			{tickets?.map((ticket) => (
 				<TicketItem key={ticket?.id} ticket={ticket} />
 			))}
 		</div>
